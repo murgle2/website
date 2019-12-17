@@ -12,6 +12,7 @@ const Sequelize = require('sequelize'),
 	ActivityModel = require('../src/models/db/activity'),
 	MapLibraryEntryModel = require('../src/models/db/map-library'),
 	MapFavoriteModel = require('../src/models/db/map-favorite'),
+	MapFollowsModel = require('../src/models/db/map-follow'),
 	UserFollowsModel = require('../src/models/db/user-follow'),
 	NotificationModel = require('../src/models/db/notification'),
 	BadgeModel = require('../src/models/db/badge'),
@@ -78,6 +79,7 @@ const MapCredit = MapCreditModel(sequelize, Sequelize);
 const Activity = ActivityModel(sequelize, Sequelize);
 const MapLibraryEntry = MapLibraryEntryModel(sequelize, Sequelize);
 const MapFavorite = MapFavoriteModel(sequelize, Sequelize);
+const MapFollows = MapFollowsModel(sequelize, Sequelize);
 const UserFollows = UserFollowsModel(sequelize, Sequelize);
 const Notification = NotificationModel(sequelize, Sequelize);
 const Badge = BadgeModel(sequelize, Sequelize);
@@ -127,11 +129,15 @@ MapLibraryEntry.belongsTo(Map, { as: 'map', foreignKey: 'mapID' });
 MapFavorite.belongsTo(User, { foreignKey: 'userID' });
 Map.hasMany(MapLibraryEntry, { as: 'libraryEntries', foreignKey: 'mapID', onDelete: 'CASCADE' });
 Map.hasMany(MapFavorite, { as: 'favorites', foreignKey: 'mapID', onDelete: 'CASCADE' });
+//Map.hasMany(MapFollows, {as: 'follows', foreignKey: 'mapID', onDelete: 'CASCADE' });
 Map.hasMany(UserMapRank, { foreignKey: 'mapID', onDelete: 'CASCADE'});
 Map.hasOne(UserMapRank, { as: 'personalBest', foreignKey: 'mapID', constraints: false});
 Map.hasOne(UserMapRank, { as: 'worldRecord', foreignKey: 'mapID', constraints: false});
 MapFavorite.belongsTo(Map, { as: 'map', foreignKey: 'mapID' });
 MapCredit.belongsTo(Map, { as: 'map', foreignKey: 'mapID'});
+//MapFollows.belongsTo(User, { as: 'followee', foreignKey: 'followeeID', onDelete: 'CASCADE' });
+//MapFollows.belongsTo(Map, { as: 'map', foreignKey: 'mapID' });
+//Map.belongsToMany(User, { as: 'mapFollowers', foreignKey: 'mapID', otherKey: 'foloweeID', through: MapFollows, onDelete: 'CASCADE' });
 UserFollows.belongsTo(User, { as: 'followee', foreignKey: 'followeeID', onDelete: 'CASCADE' });
 UserFollows.belongsTo(User, { as: 'followed', foreignKey: 'followedID', onDelete: 'CASCADE' });
 Notification.belongsTo(User, { as: 'forUser', foreignKey: 'forUserID' });
@@ -192,6 +198,7 @@ module.exports = {
 	Activity,
 	MapLibraryEntry,
 	MapFavorite,
+	MapFollows,
 	UserFollows,
 	Notification,
 	Badge,

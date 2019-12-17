@@ -14,6 +14,7 @@ import {MapFavorite} from '../models/map-favorite.model';
 import {MomentumMaps} from '../models/momentum-maps.model';
 import {MapSubmissionSummaryElement} from '../models/map-submission-summary-element.model';
 import {UserCredits} from '../models/user-credits.model';
+import {MapFollow} from '../models/map-follow.model';
 
 @Injectable({
   providedIn: 'root',
@@ -148,6 +149,36 @@ export class LocalUserService {
    */
   public removeMapFromFavorites(mapID: number): Observable<any> {
     return this.http.delete('/api/user/maps/favorites/' + mapID);
+  }
+
+  /**
+   * @param mapID Map to receive notifications for
+   * @param notifyOn The flags to notify the followee on
+   * @return Update map notifications
+   */
+
+  public updateMapNotify(mapID: number, notifyOn: number): Observable<any> {
+    return this.http.put('/api/user/maps/followMap/' + mapID, {
+      notifyOn: notifyOn,
+    });
+  }
+
+ /**
+   * @param mapID The map to check if notifications are enabled
+   * @return A json object with the potential map and the activity type for notificaions
+   */
+  public checkMapNotify(mapID: number): Observable<MapFollow> {
+    return this.http.get<MapFollow>('/api/user/maps/followMap/' + mapID);
+  }
+
+  /**
+   * @param mapID The map to disable notificaions for
+   * @return Notifications disabled for map
+   */
+  public disableMapNotify(mapID: number): Observable<any> {
+    return this.http.delete('/api/user/maps/followMap/' + mapID, {
+      responseType: 'text',
+    });
   }
 
   /**
