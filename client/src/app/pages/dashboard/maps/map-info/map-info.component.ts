@@ -79,7 +79,7 @@ export class MapInfoComponent implements OnInit, OnDestroy {
       this.route.paramMap.pipe(
         switchMap((params: ParamMap) =>
           this.mapService.getMap(Number(params.get('id')), {
-            params: { expand: 'info,credits,submitter,stats,images,inFavorites,inLibrary,tracks' },
+            params: {expand: 'info,credits,submitter,stats,images,inFavorites,inLibrary,tracks'},
           }),
         ),
       ).subscribe(map => {
