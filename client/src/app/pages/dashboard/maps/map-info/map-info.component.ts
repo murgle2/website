@@ -99,11 +99,11 @@ export class MapInfoComponent implements OnInit, OnDestroy {
   galleryImages: NgxGalleryImage[];
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private mapService: MapsService,
-              private locUserService: LocalUserService,
-              private toastService: NbToastrService,
-              private dialogService: NbDialogService) {
+    private router: Router,
+    private mapService: MapsService,
+    private locUserService: LocalUserService,
+    private toastService: NbToastrService,
+    private dialogService: NbDialogService) {
     this.ReportType = ReportType;
     this.mapInLibrary = false;
     this.map = null;
@@ -147,7 +147,7 @@ export class MapInfoComponent implements OnInit, OnDestroy {
       this.route.paramMap.pipe(
         switchMap((params: ParamMap) =>
           this.mapService.getMap(Number(params.get('id')), {
-            params: {expand: 'info,credits,submitter,stats,images,inFavorites,inLibrary,tracks'},
+            params: { expand: 'info,credits,submitter,stats,images,inFavorites,inLibrary,tracks' },
           }),
         ),
       ).subscribe(map => {
@@ -218,7 +218,7 @@ export class MapInfoComponent implements OnInit, OnDestroy {
       },
     }).onClose.subscribe(resp => {
       if (resp) {
-        if (resp.newFlags == 0) {
+        if (resp.newFlags === 0) {
           if (this.mapFollow != null) {
             this.locUserService.disableMapNotify(this.map.id).subscribe(() => {
               this.mapFollow.notifyOn = 0;
@@ -227,8 +227,7 @@ export class MapInfoComponent implements OnInit, OnDestroy {
               this.toastService.danger('Could not disable notifications', err.message);
             });
           }
-        }
-        else {
+        } else {
           this.locUserService.updateMapNotify(this.map.id, resp.newFlags).subscribe(res => {
             this.mapNotifications = true;
             if (this.mapFollow == null)
@@ -237,10 +236,10 @@ export class MapInfoComponent implements OnInit, OnDestroy {
               this.mapFollow.notifyOn = resp.newFlags;
           }, err => {
             this.toastService.danger('Could not enable notificaions', err.message);
-          })
+          });
         }
       }
-    })
+    });
   }
 
   updateGalleryImages(mapImages: MapImage[]) {
