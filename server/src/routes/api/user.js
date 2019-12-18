@@ -52,12 +52,6 @@ router.route('/maps/favorites/:mapID')
 	.delete(userCtrl.removeMapFromFavorites)
 	.all(errorCtrl.send405);
 
-router.route('/maps/followMap/:mapID')
-	.get(userCtrl.checkMapNotify)
-	.put(userCtrl.updateMapNotify)
-	.delete(userCtrl.disableMapNotify)
-	.all(errorCtrl.send405);
-
 router.route('/activities')
 	.get(validate(userValidation.getActivities), userCtrl.getActivities)
 	.all(errorCtrl.send405);

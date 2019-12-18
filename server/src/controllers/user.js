@@ -132,27 +132,6 @@ module.exports = {
 		}).catch(next);
 	},
 
-	updateMapNotify: (req, res, next) => {
-		user.updateMapNotify(req.user.id, req.params.mapID, req.body.notifyOn).then(result => {
-			res.json(result);
-		}).catch(next);
-	},
-
-	checkMapNotify: (req, res, next) => {
-		user.checkMapNotify(req.user.id, req.params.mapID).then(result => {
-			if (result)
-				res.json(result);
-			else
-				res.sendStatus(204);
-		}).catch(next);
-	},
-
-	disableMapNotify: (req, res, next) => {
-		user.disableMapNotify(req.user.id, req.params.mapID).then(() => {
-			res.sendStatus(200);
-		}).catch(next);
-	},
-
 	getActivities: (req, res, next) => {
 		req.query.userID = req.user.id;
 		activity.getAll(req.query).then(activities => {

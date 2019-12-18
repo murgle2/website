@@ -1,7 +1,7 @@
 'use strict';
 const {
 		sequelize, Op, User, UserAuth, UserStats, Profile, UserFollows, MapCredit, Notification, Activity,
-		DiscordAuth, TwitchAuth, TwitterAuth, Map, UserMapRank, Run, MapFollows
+		DiscordAuth, TwitchAuth, TwitterAuth, Map, UserMapRank, Run
 	} = require('../../config/sqlize'),
 	activity = require('./activity'),
 	OAuth = require('oauth'),
@@ -650,42 +650,6 @@ module.exports = {
 	unfollowUser: (followeeID, followedID) => {
 		return UserFollows.destroy({
 			where: {followedID: followedID, followeeID: followeeID}
-		});
-	},
-
-	updateMapNotify: (followeeID, mapID, notify) => {
-		return MapFollows.findOne({
-			where: {
-				followeeID: followeeID,
-				mapID: mapID
-			}
-		}).then(map => {
-			if (map) {
-				return MapFollows.update(
-					{ notifyOn: notify },
-					{ where: { followeeID: followeeID, mapID: mapID } }
-				)
-			} else {
-				return MapFollows.create({
-					notifyOn: notify,
-					mapID: mapID,
-					followeeID: followeeID
-				},
-				)
-			}
-		})
-	},
-
-	checkMapNotify: (followeeID, mapID) => {
-		return MapFollows.findOne({
-			where: { followeeID: followeeID, mapID: mapID },
-			raw: true
-		})
-	},
-
-	disableMapNotify: (followeeID, mapID) => {
-		return MapFollows.destroy({
-			where: { followeeID: followeeID, mapID: mapID }
 		});
 	},
 

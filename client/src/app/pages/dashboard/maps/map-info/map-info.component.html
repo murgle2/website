@@ -8,13 +8,6 @@
           <div *ngIf="!previewMap && (isSubmitter || isAdmin || isModerator)">
             <button class="btn btn-outline-info" type="button" (click)="onEditMap()">Edit Map</button>
           </div>
-          <div>
-            <button class="btn btn-outline-info" type="button" (click)="editNotificationSettings()"
-              nbPopover="{{mapNotifications ? 'Disable Notifications' : 'Enable Notifications'}}"
-              [nbPopoverTrigger]="'hint'">
-              <nb-icon icon="{{mapNotifications ? 'bell' : 'bell-outline'}}"></nb-icon>
-            </button>
-          </div>
         </div>
       </div>
     </div>
